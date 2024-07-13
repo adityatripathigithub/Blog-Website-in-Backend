@@ -1,17 +1,27 @@
+require("dotenv").config({path:"./.env"})
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const userModel = require("./Models/userModel")
+const session = require("express-session")
+const passport = require("passport")
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
+
+
 // db connect
 
-const db = require("./models/database")
+// require("./Models/connect").connectionDB()
+// 
+const db= require("./Models/connect") 
+
+const { configDotenv, config } = require('dotenv');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -21,6 +31,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session ({
+  resave:false,
+  saveUninitialized:true,
+  secret:process.env.SESSION_SECRET
+
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
+passport.serializeUser(userModel.serializeUser())
+passport.deserializeUser(userModel.deserializeUser())
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
