@@ -18,10 +18,10 @@ var app = express();
 // db connect
 
 // require("./Models/connect").connectionDB()
-// 
-
-
 const db= require("./Models/connect") 
+//
+
+
 
 const { configDotenv, config } = require('dotenv');
 // view engine setup
