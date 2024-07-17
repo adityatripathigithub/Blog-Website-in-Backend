@@ -9,4 +9,7 @@ exports.indexlogin = function (req, res, next) {
 exports.indexregister = function (req, res, next) {
     res.render('register');
 }
+exports.indexprofile = function (req, res, next) {
+    res.render('profile');
+}
 
