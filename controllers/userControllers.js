@@ -26,7 +26,6 @@ exports.signuppage = (req, res, next) => {
 
 exports.signinpage = passport.authenticate("local", {
     successRedirect: "/profile",
-    failureRedirect: "/login"
 })
 
 
